@@ -1,5 +1,3 @@
-//REV 2
-
 //DISPLAY CONST
 const int DISPLAY_SDA = 20;  
 const int DISPLAY_SDL = 21;
