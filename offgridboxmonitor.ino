@@ -7,7 +7,7 @@ const int GSM_RX = 2;
 const int GSM_TX = 3;
 const int GSM_RESET = 7;
 
-//SD CONST
+//SD CONST XXXX
 const int SD_SPI_1 = 2;  
 const int SD_SPI_2 = 3;
 const int SD_SPI_2 = 3;
