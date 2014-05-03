@@ -13,10 +13,11 @@ const int SD_SPI_2 = 3;
 const int SD_SPI_2 = 3;
 
 //PUBLIC VARS
-float panelTemp      = 0.0;
-float ambientTemp    = 0.0;
-float batteryVoltage = 0.0;
-float waterLevel     = 0.0;
+float panelTemp          = 0.0;
+float ambientTemp        = 0.0;
+float batteryVoltage     = 0.0;
+int   batteryPercentage  = 0.0;
+float waterLevel         = 0.0;
 
 //MIX
 boolean readSensorValue = true;
@@ -29,10 +30,11 @@ void setup() {
 void loop() {
   //READ SENSOR VALUES
   if(readSensorValue){
-    panelTemp      = getPanelTemp();
-    ambientTemp    = getAmbientTemp();
-    batteryVoltage = getBatteryVoltage();
-    waterLevel     = getWaterLevel();
+    panelTemp         = getPanelTemp();
+    ambientTemp       = getAmbientTemp();
+    batteryVoltage    = getBatteryVoltage();
+    batteryPercentage = getBatteryPercentage();
+    waterLevel        = getWaterLevel();
     updateDisplayValues();
   }
   
@@ -57,6 +59,10 @@ float getAmbientTemp(){
 
 //READ BATTERY TEMPERATURE (24 V BATTERY)
 float getBatteryVoltage(){
+  return 1; 
+}
+//READ BATTERY PERCENTAGE
+int getBatteryPercentage(){
   return 1; 
 }
 
