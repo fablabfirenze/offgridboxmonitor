@@ -3,6 +3,9 @@
 const int DISPLAY_SDA = 20;  
 const int DISPLAY_SDL = 21;
 
+//WATER CONST
+const int WATER_LEVEL_PIN = A0;
+
 //GSM MODULE CONST
 const int GSM_RX = 2;
 const int GSM_TX = 3;
