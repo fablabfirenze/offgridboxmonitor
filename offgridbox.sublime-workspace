@@ -1,0 +1,383 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"coo",
+				"cookie"
+			],
+			[
+				"pop",
+				"pop_username"
+			],
+			[
+				"con",
+				"controller	AngularJS"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 147.0,
+		"selected_items":
+		[
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			],
+			[
+				"packa",
+				"Package Control: Install Package"
+			],
+			[
+				"rein",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"reinde",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"php",
+				"Set Syntax: PHP"
+			],
+			[
+				"html",
+				"Set Syntax: HTML"
+			]
+		],
+		"width": 530.0
+	},
+	"console":
+	{
+		"height": 139.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) ",
+			"?",
+			"man",
+			"help",
+			"php -v"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Applications/MAMP/htdocs/ci/Gruntfile.js",
+		"/Applications/MAMP/htdocs/ci/.gitignore",
+		"/Applications/MAMP/htdocs/ci/app/index.html",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/views/panel/index.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/controllers/PanelController.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/models/User.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/controllers/DomainController.php",
+		"/Users/tommasorossi/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-keymap",
+		"/Users/tommasorossi/Library/Application Support/Sublime Text 3/Packages/Default/Default (OSX).sublime-keymap",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/components/UserIdentity.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/models/LoginForm.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/config/main.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/views/layouts/frontend_layout.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/components/productManager/TLDManager/DomainRRPTLD.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/components/productManager/TLDManager/ADomainTLD.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/components/productManager/TLDManager/DomainTLDFactory.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/vendor/aws/aws-sdk-php/tests/mock/cloudfront/ListDistributions_page_2",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/vendor/aws/aws-sdk-php/tests/mock/cloudfront/ListDistributions_page_1",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/models/parentModels/TldRegistrarQueueParent.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/models/TldRegistrarQueue.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/yii/i18n/data/ta_lk.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/index-test.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/vendor/bower_components/angular-latest/test/ngRoute/routeParamsSpec.js",
+		"/Users/tommasorossi/NetBeansProjects/pop/yii/i18n/data/rw_rw.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/yii/i18n/data/ru_ru.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/yii/i18n/data/ro_ro.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/vendor/bower_components/angular-latest/src/ngRoute/routeParams.js",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/vendor/aws/aws-sdk-php/tests/mock/route53/list_rrs_page_3",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/vendor/aws/aws-sdk-php/tests/mock/route53/list_rrs_page_2",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/vendor/aws/aws-sdk-php/tests/mock/route53/list_rrs_page_1",
+		"/Users/tommasorossi/NetBeansProjects/pop/js/old_pop/retina.js",
+		"/Users/tommasorossi/NetBeansProjects/pop/assets/2a384769/main.css",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/node_modules/grunt-contrib-uglify/node_modules/uglify-js/lib/mozilla-ast.js",
+		"/Users/tommasorossi/NetBeansProjects/pop/yii/i18n/data/fr_re.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/vendor/aws/aws-sdk-php/src/Aws/Ec2/Enum/RouteOrigin.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/node_modules/grunt/node_modules/glob/test/root-nomount.js",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/vendor/aws/aws-sdk-php/src/Aws/CloudFront/Enum/GeoRestrictionType.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/vendor/aws/aws-sdk-php/src/Aws/CloudFront/Exception/CloudFrontException.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/yii/i18n/data/az_latn_az.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/pack/css/layout.css",
+		"/Users/tommasorossi/NetBeansProjects/pop/less/bootstrap-core/forms.less",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/node_modules/grunt-contrib-less/node_modules/less/test/less/import/imports/font.less",
+		"/Users/tommasorossi/NetBeansProjects/pop/js/old_pop/login.js",
+		"/Users/tommasorossi/NetBeansProjects/pop/yii/views/log.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/vendor/aws/aws-sdk-php/tests/mock/s3/list_objects_empty",
+		"/Users/tommasorossi/NetBeansProjects/pop/js/old_pop/listino.js",
+		"/Users/tommasorossi/NetBeansProjects/pop/js/angular/app/panel/panelControllers.js",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/views/domain/_domain_list.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/js/angular/app/panel/panelRoutes.js",
+		"/Users/tommasorossi/NetBeansProjects/pop/js/angular/app/popApp.js",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/views/domain/_domain_details.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/vendor/bower_components/angular-latest/i18n/spec/utilSpec.js",
+		"/Users/tommasorossi/NetBeansProjects/pop/less/bootstrap-core/utilities.less",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/views/site/index.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/views/test/index.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/index.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/yii/i18n/data/ig_ng.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/less/bootstrap-core/popovers.less",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/vendor/aws/aws-sdk-php/docs/_snippets/performing-operations.txt",
+		"/Users/tommasorossi/NetBeansProjects/pop/js/angular/angular.js",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/views/domain/_domain_authcode.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/views/panel/_authinfo.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/css/pop_old/flexslider.css",
+		"/Users/tommasorossi/NetBeansProjects/pop/pack/angular/app/panel/rosiControllers.js",
+		"/Users/tommasorossi/NetBeansProjects/pop/js/angular/app/panel/rosiControllers.js",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/vendor/bower_components/angular-latest/test/ng/controllerSpec.js",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/components/Controller.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/js/old_pop/contattaci.js",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/vendor/aws/aws-sdk-php/src/Aws/Common/Enum/ClientOptions.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/composer.json",
+		"/Users/tommasorossi/NetBeansProjects/pop/css/pop_old/pop_custom_style.css",
+		"/Users/tommasorossi/NetBeansProjects/pop/js/angular/app/controller.js",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/views/domain/domain_details.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/controllers/SiteController.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/views/panel/_domain_details.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/views/panel/_domain_dns.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/less/bootstrap-core/panels.less",
+		"/Users/tommasorossi/NetBeansProjects/pop/js/old_pop/programma-affiliazione-registrati.js",
+		"/Users/tommasorossi/NetBeansProjects/pop/phpinfo.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/models/Domain.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/js/old_pop/domini.js",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/vendor/aws/aws-sdk-php/tests/mock/s3/delete_multiple_objects",
+		"/Users/tommasorossi/NetBeansProjects/pop/js/old_pop/demo.js",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/controllers/UserController.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/components/UserC.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/vendor/aws/aws-sdk-php/src/Aws/Common/Enum/UaString.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/protected/tests/functional/SiteTest.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/yii/i18n/data/sa_in.php",
+		"/Users/tommasorossi/NetBeansProjects/pop/assets/2a384769/styles.css",
+		"/Users/tommasorossi/Downloads/testSublime.php",
+		"/Users/tommasorossi/Downloads/index.html"
+	],
+	"find":
+	{
+		"height": 25.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"delete",
+			"$criteria = new CDbCriteria();\n        $criteria->select = array('*');\n        $criteria->limit = 5;\n        $criteria->join = array('');\n        $criteria->order = 'domain_name ASC';\n        $domains = Order::model()->findAll($criteria);",
+			"'/",
+			"/",
+			"if (User::checkMd5PopPassword()) {\n                \n            } else {\n                \n            }",
+			"\n   \n\n    protected static function getPopUser($pop_username) {\n        \n    }",
+			"];\n",
+			"timestamp",
+			"cookie",
+			"            ",
+			"');\n",
+			"        \n",
+			"location"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 25.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "offgridbox.sublime-project",
+	"replace":
+	{
+		"height": 46.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"domain",
+				"protected/controllers/DomainController.php"
+			],
+			[
+				"tld",
+				"protected/components/productManager/TLDManager/ADomainTLD.php"
+			],
+			[
+				"rrp",
+				"protected/components/productManager/TLDManager/DomainRRPTLD.php"
+			],
+			[
+				"main.ph",
+				"protected/config/main.php"
+			],
+			[
+				"frontend_",
+				"protected/views/layouts/frontend_layout.php"
+			],
+			[
+				"user",
+				"protected/models/User.php"
+			],
+			[
+				"loginf",
+				"protected/models/LoginForm.php"
+			],
+			[
+				"userid",
+				"protected/components/UserIdentity.php"
+			],
+			[
+				"inde",
+				"protected/views/panel/index.php"
+			],
+			[
+				"panel",
+				"protected/controllers/PanelController.php"
+			],
+			[
+				"_domain_l",
+				"protected/views/domain/_domain_list.php"
+			],
+			[
+				"panelr",
+				"js/angular/app/panel/panelRoutes.js"
+			],
+			[
+				"popa",
+				"js/angular/app/popApp.js"
+			],
+			[
+				"_domain_de",
+				"protected/views/domain/_domain_details.php"
+			],
+			[
+				"fronten",
+				"protected/views/layouts/frontend_layout.php"
+			],
+			[
+				"controllers.js",
+				"js/angular/app/panel/panelControllers.js"
+			],
+			[
+				"controller",
+				"js/angular/app/controller.js"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+			[
+				"d",
+				"~/SublimeProject/domee.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 289.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
