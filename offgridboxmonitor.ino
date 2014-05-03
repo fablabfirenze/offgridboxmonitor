@@ -12,7 +12,7 @@ const int SD_SPI_1 = 2;
 const int SD_SPI_2 = 3;
 const int SD_SPI_2 = 3;
 
-//PUBLIC VARS test
+//PUBLIC VARS
 float panelTemp          = 0.0;
 float ambientTemp        = 0.0;
 float batteryVoltage     = 0.0;
