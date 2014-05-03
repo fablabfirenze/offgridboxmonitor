@@ -76,9 +76,34 @@ int getBatteryPercentage(){
   return 1; 
 }
 
-//READ WATER LEVEL (MAX TANK LEVEL 1200LT)
+//READ WATER LEVEL (MAX TANK LEVEL 1500LT)
 float getWaterLevel(){
-  return 1;
+
+  float hmax = 95; // [cm] ch 1500 specification  (max value using formula)
+  float Vempty = 1.30; //[V] @h = 0 
+  float Vfull = 2.33; //[V] @h = hmax
+  float Delta = (Vfull-Vempty)/hmax; // [V]/[cm]
+  float L = 163; //tank length CH 1500 [cm]
+  float R = 57.75; //radius tank CH 1500 [cm]
+ 
+  int sensorValue = analogRead(A0);
+  float Vactual = sensorValue * (5.0 / 1023.0); // Convert the analog reading (which goes from 0 - 1023) to a voltage (0 - 5V)
+ 
+  //float V = Vempty+Delta*h;
+  float h = (Vactual-Vempty)/Delta; //normalized height
+  
+  float liters = L*(pow(R,2)*acos((R-h)/R)+ (h-R)*sqrt( 2*h*R - pow(h,2)))/1000; //volume = area under the arc * length --> 1dm^3 = 1000cm^3 
+
+  if(h > 95){ //check max liters = 1500 @95cm as in the formula
+    liters = 1500; 
+  }
+  
+  if (h < 2.82) { //chack min liters @h=2.82cm
+     h = 0;
+     liters = 0;     
+  }
+  
+  return liters;
 }
 
 //UPDATE DISPLAY VALUES
