@@ -1,4 +1,5 @@
 //REV 2
+// OffGridBox Monitor arduino project
 
 //DISPLAY CONST
 const int DISPLAY_SDA = 20;  
