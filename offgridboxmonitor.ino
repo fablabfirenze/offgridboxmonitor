@@ -1,7 +1,10 @@
 
 //DISPLAY CONST
-const int DISPLAY_SDA = 20;  
-const int DISPLAY_SDL = 21;
+const int LCD_SDA = 20;
+const int LCD_SDL = 21;
+
+// Button Pin
+const int  LCD_Button = 4;
 
 //WATER CONST
 const int WATER_LEVEL_PIN = A0;
@@ -12,9 +15,9 @@ const int GSM_TX = 3;
 const int GSM_RESET = 7;
 
 //SD CONST
-const int SD_SPI_1 = 2;  
+const int SD_SPI_1 = 2;
 const int SD_SPI_2 = 3;
-const int SD_SPI_2 = 3;
+const int SD_SPI_3 = 3;
 
 //PUBLIC VARS
 float panelTemp          = 0.0;
@@ -28,7 +31,8 @@ boolean readSensorValue = true;
 boolean sendValueToServer = true;
 
 void setup() {
-  Serial.begin(9600); 
+  Serial.begin(9600);
+  setupLCD();
 }
 
 void loop() {
@@ -41,29 +45,31 @@ void loop() {
     waterLevel        = getWaterLevel();
     updateDisplayValues();
   }
-  
+
   if(sendValueToServer){
    //SEND DATA TO THE SERVER
   }
-  
+
+  LCD_Refresh(digitalRead(LCD_Button));
+
   delay(2000);
 }
 
 //READ PANEL TEMPERATURE
 //MICHELE - FRANCESCO
 float getPanelTemp(){
-  return 1; 
+  return 1;
 }
 
 //READ AMBIENT TEMPERATURE
 //MICHELE - FRANCESCO
 float getAmbientTemp(){
-  return 1; 
+  return 1;
 }
 
 //READ BATTERY TEMPERATURE (24 V BATTERY)
 float getBatteryVoltage(){
-  return 1; 
+  return 1;
 }
 //READ BATTERY PERCENTAGE
 int getBatteryPercentage(){
@@ -72,10 +78,10 @@ int getBatteryPercentage(){
 
 //READ WATER LEVEL (MAX TANK LEVEL 1200LT)
 float getWaterLevel(){
-  return 1; 
+  return 1;
 }
 
 //UPDATE DISPLAY VALUES
 void updateDisplayValues(){
-  
+
 }
