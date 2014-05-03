@@ -43,16 +43,16 @@ void loop() {
     batteryVoltage    = getBatteryVoltage();
     batteryPercentage = getBatteryPercentage();
     waterLevel        = getWaterLevel();
-    updateDisplayValues();
+    
   }
 
   if(sendValueToServer){
    //SEND DATA TO THE SERVER
   }
 
-  LCD_Refresh(digitalRead(LCD_Button));
+  LCD(digitalRead(LCD_BUTTON));
 
-  delay(2000);
+  //delay(2000);
 }
 
 //READ PANEL TEMPERATURE
