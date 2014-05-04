@@ -36,10 +36,7 @@ const int LCD_Button = 4;
 const int WATER_LEVEL_SENSOR = A0;
 //SECTION FOR WATERLEVEL DECLARETION - end
 
-//GSM MODULE CONST
-const int GSM_RX = 2;
-const int GSM_TX = 3;
-const int GSM_RESET = 7;
+
 
 //SD CONST
 const int SD_SPI_1 = 2;
@@ -65,6 +62,9 @@ void setup() {
   }
 
   setupLCD();
+  setupRTC();
+  setupSD();
+  setupGSM();
 }
 
 void loop() {
@@ -75,7 +75,15 @@ void loop() {
     batteryVoltage    = getBatteryVoltage();
     batteryPercentage = getBatteryPercentage();
     waterLevel        = getWaterLevel();
+    
+    if (logToSd()) {
+      Serial.println("Write finished.");
+    } else {
+      Serial.println("Error writing.");
+    }
   }
+  
+  
 
   if(sendValueToServer){
    //SEND DATA TO THE SERVER
@@ -83,14 +91,6 @@ void loop() {
 
   LCD_Refresh(Read_LCD_Button());
 
-  delay(50);
+  delay(120000);
 }
 
-//READ BATTERY TEMPERATURE (24 V BATTERY)
-float getBatteryVoltage(){
-  return batteryVoltage;
-}
-//READ BATTERY PERCENTAGE
-int getBatteryPercentage(){
-  return batteryPercentage;
-}
