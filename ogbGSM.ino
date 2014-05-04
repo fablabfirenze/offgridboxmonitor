@@ -2,7 +2,7 @@
 #include <GSM.h>
 
 
-#define PINNUMBER "4660"
+#define PINNUMBER "4521"
 #define PHONENUMBER "3938916804"
 
 // initialize the library instance
@@ -15,8 +15,8 @@ GSM_SMS sms;
  */
 void setupGSM()
 {
-  
-  Serial.print("Initializing GSM card...");
+
+  // Serial.print("Initializing GSM card...");
   // connection state
   boolean notConnected = true;
 
@@ -28,13 +28,13 @@ void setupGSM()
       notConnected = false;
     else
     {
-      Serial.println("Not connected");
+      // Serial.println("Not connected");
       delay(1000);
     }
   }
-  
-  Serial.println("GSM initialized");
-  
+
+  // Serial.println("GSM initialized");
+
 }
 
 
@@ -42,6 +42,6 @@ void sendSms(String dataString) {
   // send the message
   sms.beginSMS(PHONENUMBER);
   sms.print(dataString);
-  sms.endSMS(); 
-  Serial.println("\nCOMPLETE!\n");
+  sms.endSMS();
+  // Serial.println("\nCOMPLETE!\n");
 }

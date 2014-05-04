@@ -9,8 +9,8 @@ RTC_DS1307 rtc;
  */
 void setupRTC()
 {
-  
-  Serial.print("Initializing RTC ...");
+
+  // Serial.print("Initializing RTC ...");
   #ifdef AVR
     Wire.begin();
   #else
@@ -19,10 +19,10 @@ void setupRTC()
   rtc.begin();
 
   if (! rtc.isrunning()) {
-    Serial.println("RTC is NOT running!");
+    // Serial.println("RTC is NOT running!");
     // following line sets the RTC to the date & time this sketch was compiled
-    rtc.adjust(DateTime(__DATE__, __TIME__));
+    // rtc.adjust(DateTime(__DATE__, __TIME__));
   }
-  
-  Serial.println("RTC initialized.");
+
+  // Serial.println("RTC initialized.");
 }

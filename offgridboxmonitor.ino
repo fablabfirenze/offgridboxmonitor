@@ -1,6 +1,6 @@
 // Section for Temparature SENSOR - start
 #include <Adafruit_MAX31855.h>
-#include "ogbQuantumWaterLevel.h"
+// #include "ogbQuantumWaterLevel.h"
 
 //THERMOCOUPLE AMBIENT CONST
 const int THERMO_ENV_DO = 22;//13
@@ -18,7 +18,7 @@ Adafruit_MAX31855 thermocouplePanel(THERMO_PANEL_CLK, THERMO_PANEL_CS, THERMO_PA
 
 boolean isEnvironmentTempValid = false;  //true:indicate valid temp number; fales: temp read failed NAN
 boolean isPanelTempValid = false;  //true:indicate valid temp number; fales: temp read failed NAN
-boolean debug = true;              //true:fro printing data in serial line
+boolean debug = false;              //true:fro printing data in serial line
 // Section for Temparature SENSOR - end
 
 // SECTION FOR LCD DECLARATION - start
@@ -39,13 +39,16 @@ unsigned long LCD_CurrPageTime;          // Up Time of page
 unsigned long LCD_DIM  = 120000;
 unsigned long LCD_TIME_ON;
 
+unsigned long SAVE_TIMER = 0;
+unsigned long SEND_TIMER = 0;
+
 // SECTION FOR LCD DECLARATION - end
 
 //SECTION FOR WATERLEVEL DECLARETION - start
 const int WATER_LEVEL_SENSOR = A0;
 //SECTION FOR WATERLEVEL DECLARETION - end
 
-
+String logRow = "";
 
 //SD CONST
 const int SD_SPI_1 = 2;
@@ -72,6 +75,9 @@ void setup() {
   if(debug == true){
     Serial.begin(9600);
   }
+
+  Serial.begin(9600);
+
   setup_battery();
   setup_counter();
 
@@ -79,12 +85,16 @@ void setup() {
   int idx0 = 0;
   My_Timer[idx0++] = &LCD_CurrPageTime;
   My_Timer[idx0++] = &LCD_TIME_ON;
+  My_Timer[idx0++] = &SAVE_TIMER;
+  My_Timer[idx0++] = &SEND_TIMER;
   My_Timer[idx0]   = 0x00;                // last entry MUST be null!!!
 
-  setupLCD();
+
   setupRTC();
   setupSD();
   setupGSM();
+
+  setupLCD();
 }
 
 void loop() {
@@ -97,30 +107,36 @@ void loop() {
     batteryPercentage = getBatteryPercentage();
     powerUsed         = getKWh();
     waterLevel        = getWaterLevel();
-    
-    if (logToSd()) {
-      Serial.println("Write finished.");
-    } else {
-      Serial.println("Error writing.");
-    }
-  }
-  
-  
 
-  if(sendValueToServer){
-   //SEND DATA TO THE SERVER
+    // logToSd();
+    // if (logToSd()) {
+    //   Serial.println("Write finished.");
+    // } else {
+    //   Serial.println("Error writing.");
+    // }
   }
+
+  if(millis() > SAVE_TIMER){
+    logToSd();
+    SAVE_TIMER = millis()+5000;
+  }
+
+  if(millis() > SEND_TIMER){
+    sendSms(logRow);
+    SEND_TIMER = millis()+60000;
+  }
+
 
   LCD_Refresh(Read_LCD_Button());
 
 
-  delay(120000);
+  delay(50);
 }
 
 
-unsigned long lastTime = 4294964296;
+unsigned long lastTime = 0;
 void checkTimerOverflow(){
-  unsigned long mil = millis() + 4294964296;
+  unsigned long mil = millis();
 
   if(mil < lastTime){
     // Serial.println("\n\n\nRESET\n\n");

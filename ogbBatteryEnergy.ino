@@ -6,7 +6,7 @@
 #define BATTERY_FULLY_CHARGED 27.0f                                   //The value of the series of batteries after complete chargin, THIS CONSTANT HAVE TO BE RE-MEASURED WHEN THE BATTERIES ARE FULLY CHARGED
 #define BATTERY_FULLY_CHARGED_PROP 3.5978f                           //The value of the battery seen by the voltage divider, THIS CONSTANT HAVE TO BE RE-MEASURED WHEN THE BATTERIES ARE FULLY CHARGED
 #define BATTERY_CONST BATTERY_FULLY_CHARGED/BATTERY_FULLY_CHARGED_PROP
-#define VCC 5.01f
+#define VCC 5.0f
 
 #define NUM_OF_STEP 15 //It must be the number of the element in both the below arrays
 const float voltage[] = {26.40,26.26,26.16,26.04,25.92,25.80,25.72,25.64,25.56,25.48,25.40,25.24,25.08,24.96,24.88}; //THIS VALUE HAVE TO BE CHANGED WITH THE CORRECT VALUES FROM THE BATTERY'S DATASHEET
@@ -28,27 +28,29 @@ void setup_counter()
 //READ BATTERY TEMPERATURE (24 V BATTERY)
 float getBatteryVoltage(){
   float value = analogRead(BATTERY_PIN);
-  float vout = ((value * VCC) / 1023.0f);
+  // float vout = ((value * VCC) / 1023.0f);
+  float vout = value;
+  vout = (25.84 * vout)/727.0;
 
   float second_vout;
 
-  #ifdef DEBUG
-    Serial.print("ADC read: ");
-    Serial.println(value);
-    Serial.print(vout);
-    Serial.println("V");
-  #endif
+  // #ifdef DEBUG
+  //   Serial.print("ADC read: ");
+  //   Serial.println(value);
+  //   Serial.print(vout);
+  //   Serial.println("V");
+  // #endif
 
 
-  //Now we have the voltage between 0-3.5
-  //We must convert it to the range 0-24 and return it
+  // //Now we have the voltage between 0-3.5
+  // //We must convert it to the range 0-24 and return it
 
-  second_vout = (vout * BATTERY_CONST);
-  #ifdef DEBUG
-    Serial.print(second_vout);
-    Serial.print("V");
-    Serial.print("\n");
-  #endif
+  // second_vout = (vout * BATTERY_CONST);
+  // #ifdef DEBUG
+  //   Serial.print(second_vout);
+  //   Serial.print("V");
+  //   Serial.print("\n");
+  // #endif
 
   return vout;
 }
@@ -85,10 +87,13 @@ float getBatteryPercentage()
 
 float getKWh()
 {
+  float kwh = (float)counter_variable/1000.0;
    #ifdef DEBUG
      Serial.print("KWh:");
-     Serial.println(counter_variable/1000);
+     Serial.println(kwh);
    #endif
+
+  return kwh;
 }
 
 void counter()

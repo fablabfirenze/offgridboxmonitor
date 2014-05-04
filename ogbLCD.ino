@@ -37,12 +37,12 @@ int LCD_State;                  // Current state
 #define LCD_State_Start  -1;    // -1 = All Values at a time
 
 LCD_Values  LCD_A_Val[] = { 1, &panelTemp,         0.0,    130.0, 0, "Panel Temp.",     "\"C",    " PT",   0,  0, 1,
-                            2, &ambientTemp,       0.0,     80.0, 0, "Ambient Temp",    "\"C",    " AT",   0,  7, 1,
-                            3, &batteryVoltage,    0.0,     26.0, 1, "Battery Voltage", "V",      " BV",   0, 12, 1,
-                            4, &batteryPercentage, 0.0,    100.0, 0, "Battery %",       "%",      " B%",   1,  0, 1,
-                            5, &waterLevel,        0.0,   8500.0, 0, "Water Level",     "L",      " WL",   1, 11, 1,
-                            6, &powerProd,         0.0,    150.0, 1, "Power Produced",  "W",      " W+",   0,  0, 2,
-                            7, &powerUsed,         0.0,    150.0, 1, "Power Used",      "W",      " W-",   1,  0, 2,
+                            2, &ambientTemp,       0.0,     80.0, 0, "Ambient Temp.",    "\"C",    " AT",   0,  7, 1,
+                            3, &batteryVoltage,    0.0,     99.0, 1, "Battery Voltage", "V",      " BV",   0, 12, 1,
+                            4, &batteryPercentage, 0.0,    999.0, 0, "Battery %",       "%",      " B%",   1,  0, 1,
+                            5, &waterLevel,        0.0,   8500.0, 0, "Water Level",     "l",      " WL",   1, 11, 1,
+                            6, &powerProd,         0.0,    150.0, 1, "Energy Produced",  "kWh",      " kWh+",   0,  0, 2,
+                            7, &powerUsed,         0.0,    150.0, 1, "Energy Used",      "kWh",      " kWh-",   1,  0, 2,
                            -1, 0x00,               0.0,      0.0, 0, 0x00,              0x00,      0x00,  -1,  0, 0  };
 
 // Welcome Message
