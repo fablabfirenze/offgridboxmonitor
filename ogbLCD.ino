@@ -44,7 +44,7 @@ LCD_Values  LCD_A_Val[] = { 1, &panelTemp,         0.0,    130.0, 0, "Panel Temp
                             2, &ambientTemp,       0.0,     80.0, 0, "Ambient Temp",    "\"C",    " AT",   0,  7, 1,
                             3, &batteryVoltage,    0.0,     26.0, 1, "Battery Voltage", "V",      " BV",   0, 12, 1,
                             4, &batteryPercentage, 0.0,    100.0, 0, "Battery %",       "%",      " B%",   1,  0, 1,
-                            5, &waterLevel,        0.0,   1500.0, 0, "Water Level",     "L",      " WL",   1, 11, 1,
+                            5, &waterLevel,        0.0,   8500.0, 0, "Water Level",     "L",      " WL",   1, 11, 1,
                             6, &powerProd,         0.0,    150.0, 1, "Power Produced",  "W",      " W+",   0,  0, 2,
                             7, &powerUsed,         0.0,    150.0, 1, "Power Used",      "W",      " W-",   1,  0, 2,
                            -1, 0x00,               0.0,      0.0, 0, 0x00,              0x00,      0x00,  -1,  0, 0  };
@@ -155,6 +155,12 @@ void LCD_ShowAllValues()
 void LCD_ShowOneValue()
 {
   int idx0;
+  int idx1;
+  float Value;
+  int   MaxDigit;
+  int   ValDigit;
+  String Fill     = "             ";
+  String OverFlow = "?????????????";
 
   for ( idx0 = 0; LCD_A_Val[idx0].State != -1; idx0++)
   {
@@ -181,12 +187,31 @@ void LCD_ShowOneValue()
 
   if ( *LCD_A_Val[idx0].Value >= LCD_A_Val[idx0].Min && *LCD_A_Val[idx0].Value <= LCD_A_Val[idx0].Max )
   {
+
+    // number of digit
+      Value = LCD_A_Val[idx0].Max;
+      for ( MaxDigit = 1; Value; MaxDigit++)
+         Value = (int) Value / 10;
+
+    // number of digit
+      Value = *LCD_A_Val[idx0].Value;
+      for ( ValDigit = 1; Value; ValDigit++)
+         Value = (int) Value / 10;
+
+    if ( MaxDigit > ValDigit )
+      lcd.print(Fill.substring(0,MaxDigit - ValDigit ));
+
     if ( LCD_A_Val[idx0].NDec == 0 )
       lcd.print((int)*LCD_A_Val[idx0].Value);
     else
       lcd.print(*LCD_A_Val[idx0].Value, LCD_A_Val[idx0].NDec );
   } else {
-          lcd.print("ERROR!!!");
+           // number of digit
+          Value = LCD_A_Val[idx0].Max;
+          for ( MaxDigit = 1; Value; MaxDigit++)
+             Value = (int) Value / 10;
+
+          lcd.print(OverFlow.substring(1,MaxDigit));
          }
 
   lcd.setCursor((20-LCD_A_Val[idx0].UM.length()),1);
