@@ -1,5 +1,6 @@
 // Section for Temparature SENSOR - start
 #include <Adafruit_MAX31855.h>
+#include "ogbQuantumWaterLevel.h"
 
 //THERMOCOUPLE AMBIENT CONST
 const int THERMO_ENV_DO = 22;//13
