@@ -4,112 +4,64 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 
-
-LiquidCrystal_I2C lcd(0x3F,20,4);
+// SPI address tested   = 0x3F
+LiquidCrystal_I2C lcd(LCD_ADDR,LCD_NCAR,LCD_NROW);
 
 /*
  *
- * Pin Configuration
+ * Tested Pin Configuration
  *
- * 4 = Push button to change value on display
+ * 4     Push button to change value on display
  * 20,21 LCD Display
  *
  */
-
-//PUBLIC VARS
-// float panelTemp      = 123.0;
-// float ambientTemp    = 12.0;
-// float waterLevel     = 1200.0;
-// float batteryVoltage = 24.0;
-
-int   time_HH = 24;                           // hour of last refresh
-int   time_mm = 59;                           // min  of last refresh
-
 /*
- * Variable definition for display values
- *
+ * Binding Structure
  */
+struct LCD_Values {
+                    // One Value at a time
+                    int       State;        // State of LCD. Last record must be -1!!!
+                    float    *Value;        // Variable address (must be the address!!!)
+                    float     Min;          // Min Value
+                    float     Max;          // Max Value
+                    int       NDec;         // #decimal
+                    String    Label;        // Value's Label 
+                    String    UM;           // Unity of measure
+                    // All values at a time
+                    String    ShortLabel;
+                    int       Row;          // -1 don't show
+                    int       Col;          //
+                    int       Page_Num;     // Display value on Page Num (must start from 1 and must be consequentially!!!)
+};
+int LCD_State;                  // Current state 
+#define LCD_State_Start  -1;    // -1 = All Values at a time
 
-/*
- * Displayed value
- * 0 Setup
- * 1 PanelTemp
- * 2 AmbientTemp
- * 3 WaterLevel
- * 4 batteryVoltage
- * 5 All Values
- */
-int LCD_State        = 1;
-/*
- * Display Mode
- *
- * 1 = Show All Values
- * 2 = Show Single Value
- */
-int LCD_Mode   = 2;
-/*
- * Panel Temperature
- */
-const char   PanelTempStr[] = "Panel Temp.";
-const char   PanelTempUM[]  = "\"C";
-const float  PanelTempMin   = 0.0;
-const float  PanelTempMax   = 130.0;
-/*
- * Ambient Temperature
- */
-const char   AmbientTempStr[] = "Ambient Temp.";
-const char   AmbientTempUM[]  = "\"C";
-const float  AmbientTempMin   = 0.0;
-const float  AmbientTempMax   = 70.0;
-/*
- * Water Level
- */
-const char   WaterLevelStr[] = "Water Level";
-const char   WaterLevelUM[]  = "L";
-const float  WaterLevelMin   = 0.0;
-const float  WaterLevelMax   = 1200.0;
-/*
- * Battery Level
- */
-const char   BatteryLevelStr[] = "Battery";
-const char   BatteryLevelUM[]  = "Volts";
-const float  BatteryLevelMin   = 0.0;
-const float  BatteryLevelMax   = 26.0;
+int  LCD_CurrPage;              // Current page displayed for LCD_State = -1
+long LCD_Page_Time = 15 * 1000;  // switch page Timeout
+long LCD_CurrPageTime;          // Up Time of page
 
-/*
- * Main Program
- */
-// void setup()
-// {
-//   setupLCD();
-// }
+LCD_Values  LCD_A_Val[] = { 1, &panelTemp,         0.0,    130.0, 0, "Panel Temp.",     "\"C",    " PT",   0,  0, 1,
+                            2, &ambientTemp,       0.0,     80.0, 0, "Ambient Temp",    "\"C",    " AT",   0,  7, 1,
+                            3, &batteryVoltage,    0.0,     26.0, 1, "Battery Voltage", "V",      " BV",   0, 12, 1,
+                            4, &batteryPercentage, 0.0,    100.0, 0, "Battery %",       "%",      " B%",   1,  0, 1,
+                            5, &waterLevel,        0.0,   1200.0, 0, "Water Level",     "L",      " WL",   1, 11, 1,
+                            6, &powerProd,         0.0,    150.0, 1, "Power Produced",  "W",      " W+",   0,  0, 2,
+                            7, &powerUsed,         0.0,    150.0, 1, "Power Used",      "W",      " W-",   1,  0, 2,
+                           -1, 0x00,               0.0,      0.0, 0, 0x00,              0x00,      0x00,  -1,  0, 0  };
 
-// void loop()
-// {
+// Welcome Message
+String LCD_Welcome = "Feat. by \"La Fabbrica del Sole\", \"FabLab Firenze\", \"OXFAM Italia\", \"Impact HUB Firenze\" ";
 
-//   LCD_Refresh(digitalRead(LCD_Button));
+// Timeout for LCD off (millisecond)
+long LCD_DIM  = 120000;
+long LCD_TIME_ON;
 
-//   if ( 1 == 1 )      // example
-//   {
-//    delay(1000);
-//    waterLevel++;
-//    panelTemp++;
-//    ambientTemp++;
-//    batteryVoltage+=0.01;
-//   }
-// }
-/*
- *
- */
-void LCD_BackGround()
-{
-  lcd.clear();
-  lcd.setCursor(0, 0);
-  lcd.print("___ \"C __ \"C ____ L");
+// BOUNCE THE BUTTON
+int LCD_BOLD_VAL;
+int LCD_BNEW_VAL;
 
-  lcd.setCursor(0, 1);
-  lcd.print("__.__ V   HH:mm  1/2");
-}
+// Function declaration
+boolean CHECK_LCD_DIM();
 /*
  *
  */
@@ -119,167 +71,235 @@ void setupLCD()
   pinMode(LCD_Button,INPUT);
 
   lcd.init();
-  lcd.backlight();
+  LCD_ON();
 
-  switch ( LCD_Mode )
-  {
-         case 1 :
-                  LCD_BackGround();
-                  break;
-         case 2 :
-                  lcd.clear();
-                  lcd.setCursor(0,0);
-                  lcd.print("Welcome OffGridBox");
-                  break;
-         default :
-                  lcd.clear();
-                  lcd.setCursor(0,0);
-                  lcd.print("Check Variable");
-                  lcd.setCursor(0,1);
-                  lcd.print("LCD_MODE=1|2");
-                  break;
-  }
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("Welcome OffGridBox");
+  LCD_Scroll_Text(1,LCD_Welcome);
+  lcd.clear();
+  
+  LCD_CurrPage = 1;
+  LCD_ON();
+  LCD_State = LCD_State_Start;
 }
 /*
  * Show All Values at a time
  */
 void LCD_ShowAllValues()
 {
-  lcd.setCursor(0, 0);
-  if(panelTemp < 0 || panelTemp > 999 ){
-    lcd.print("???");
-  }else{
-    lcd.print((int)panelTemp);
-  }
+  
+  int idx0;
+  int idx1;
+  float Value;
+  int   MaxDigit;
+  int   ValDigit;
+  int   LastPage;
+  String OverFlow = "?????????????";
+  String Fill     = "             ";
+  
+  LastPage = 0;
 
-  lcd.setCursor(7, 0);
-  if(ambientTemp < 0 || ambientTemp > 999 ){
-    lcd.print("???");
-  }else{
-    lcd.print((int)ambientTemp);
-  }
+  for ( idx0 = 0; LCD_A_Val[idx0].State != -1; idx0++)
+  {
+    if (LCD_A_Val[idx0].Row >= 0 && LCD_A_Val[idx0].Page_Num == LCD_CurrPage)
+    {
+      lcd.setCursor(LCD_A_Val[idx0].Col, LCD_A_Val[idx0].Row);
 
-  lcd.setCursor(13, 0);
-  if(waterLevel < 0 || waterLevel > 9999 ){
-    lcd.print("????");
-  }else{
-    lcd.print((int)waterLevel);
-  }
+      // number of digit
+      Value = LCD_A_Val[idx0].Max;
+      for ( MaxDigit = 1; Value; MaxDigit++)
+         Value = (int) Value / 10;
 
-  lcd.setCursor(0, 1);
-  if(batteryVoltage < 0 || batteryVoltage > 30 ){
-    lcd.print("??");
-  }else{
-    lcd.print(batteryVoltage);
-  }
+      if ( *LCD_A_Val[idx0].Value >= LCD_A_Val[idx0].Min && *LCD_A_Val[idx0].Value <= LCD_A_Val[idx0].Max )
+      {
+         // number of digit
+         Value = *LCD_A_Val[idx0].Value;
+         for ( ValDigit = 1; Value; ValDigit++)
+             Value = (int) Value / 10;
 
-  lcd.setCursor(10, 1);
-  if(time_HH < 0 || time_HH > 24 ){
-    lcd.print("??");
-  }else{
-    lcd.print(time_HH);
-  }
+         if (MaxDigit > ValDigit)           
+           lcd.print(Fill.substring(0,MaxDigit - ValDigit ));
+       
+         lcd.print(*LCD_A_Val[idx0].Value, LCD_A_Val[idx0].NDec );
+      }
+      else {
+            MaxDigit += LCD_A_Val[idx0].NDec + (LCD_A_Val[idx0].NDec > 0);
+              
+            lcd.print(OverFlow.substring(1,MaxDigit));
+           }
 
-  lcd.setCursor(13, 1);
-  if(time_mm < 0 || time_mm > 59 ){
-    lcd.print("??");
-  }else{
-    lcd.print(time_mm);
+      lcd.print(LCD_A_Val[idx0].ShortLabel);   
+    } 
+    if ( LCD_A_Val[idx0].Page_Num > LastPage )
+    {
+      LastPage = LCD_A_Val[idx0].Page_Num;
+    }
   }
+  
+  if ( ( millis() - LCD_CurrPageTime ) > LCD_Page_Time )
+  {
+    lcd.clear();
+    if ( LastPage == LCD_CurrPage )
+      LCD_CurrPage = 1;
+    else
+         LCD_CurrPage++;
+
+    LCD_CurrPageTime = millis();
+  }
+  
 }
 /*
  * Show One Value at a time
  */
 void LCD_ShowOneValue()
 {
-  lcd.clear();
-  lcd.setCursor(0,0);
-
-  switch (LCD_State)
+  int idx0;
+  
+  for ( idx0 = 0; LCD_A_Val[idx0].State != -1; idx0++)
   {
-         case 1  :
-                   LCD_Mode = 2;
-                   lcd.print(PanelTempStr);
-
-                   lcd.setCursor(0,1);
-                   if ( panelTemp >= PanelTempMin && panelTemp <= PanelTempMax )
-                     lcd.print((int)panelTemp);
-                   else
-                     lcd.print("ERROR!!!");
-
-                   lcd.setCursor((21-sizeof(PanelTempUM)),1);
-                   lcd.print(PanelTempUM);
-                   break;
-         case 2 :
-                   LCD_Mode = 2;
-                   lcd.print(AmbientTempStr);
-
-                   lcd.setCursor(0,1);
-                   if (ambientTemp >= AmbientTempMin && ambientTemp <= AmbientTempMax )
-                      lcd.print((int)ambientTemp);
-                   else
-                     lcd.print("ERROR!!!");
-
-                   lcd.setCursor((21-sizeof(AmbientTempUM)),1);
-                   lcd.print(AmbientTempUM);
-                   break;
-         case 3  :
-                   LCD_Mode = 2;
-                   lcd.print(WaterLevelStr);
-
-                   lcd.setCursor(0,1);
-                   lcd.print((int)waterLevel);
-
-                   lcd.setCursor((21-sizeof(WaterLevelUM)),1);
-                   lcd.print(WaterLevelUM);
-                   break;
-         case 4  :
-                   LCD_Mode = 2;
-                   lcd.print(BatteryLevelStr);
-
-                   lcd.setCursor(0,1);
-                   lcd.print((int)batteryVoltage);
-
-                   lcd.setCursor((21-sizeof(BatteryLevelUM)),1);
-                   lcd.print(BatteryLevelUM);
-                   break;
-         case 5  :
-                   LCD_ShowAllValues();
-                   break;
-         default :
-                   lcd.print("CHECK LCD_STATE VALUE");
-                   lcd.setCursor(0,1);
-                   lcd.print((int)LCD_State);
-                   break;
+    if (LCD_A_Val[idx0].State == LCD_State)
+    {
+       break;
+    }  
   }
+  
+  if (LCD_A_Val[idx0].State != LCD_State)
+  {
+    lcd.setCursor(0,0);
+    lcd.print("Program Error");
+    lcd.setCursor(0,1);
+    lcd.print("LCD_ShowOneValue.1 ");
+    lcd.print(idx0);    
+    return;
+  }
+
+  lcd.setCursor(0,0);
+  
+  lcd.print(LCD_A_Val[idx0].Label);
+  lcd.setCursor(0,1);
+     
+  if ( *LCD_A_Val[idx0].Value >= LCD_A_Val[idx0].Min && *LCD_A_Val[idx0].Value <= LCD_A_Val[idx0].Max ) 
+  {
+    if ( LCD_A_Val[idx0].NDec == 0 )
+      lcd.print((int)*LCD_A_Val[idx0].Value);
+    else
+      lcd.print(*LCD_A_Val[idx0].Value, LCD_A_Val[idx0].NDec );
+  } else {
+          lcd.print("ERROR!!!");
+         }
+
+  lcd.setCursor((20-LCD_A_Val[idx0].UM.length()),1);
+  lcd.print(LCD_A_Val[idx0].UM);
 
 }
 /*
  * Update values on display
+ * Entry point from main loop
  */
 void LCD_Refresh(boolean ChangeValue)
 {
+  int new_state = -1;
+  int idx0      = -1;
+
+//  lcd.setCursor(0,2);
+//  lcd.print(ChangeValue);
+
   if (ChangeValue)
   {
-    LCD_State ++;
+    LCD_ON();
+    
+    new_state = LCD_State + 1;    
 
-    if ( LCD_State > 5 )
-      LCD_State = 1;
+    if (new_state <= 0 )
+      new_state = 1;
+      
+    LCD_State = -1;
+    for ( idx0 = 0; LCD_A_Val[idx0].State != -1; idx0++)
+    {
+      if (LCD_A_Val[idx0].State == new_state)
+      {
+         LCD_State = LCD_A_Val[idx0].State;
+         break;
+      }  
+    }
+    
+    lcd.clear();
+    // if LCD_State = -1 then show all value at a time  
+    
+  } else {
+           if (CHECK_LCD_DIM())
+             return;
   }
 
-  if ( LCD_State == 5 )
-  {
-   if (LCD_Mode != 1)
-   {
-     LCD_BackGround();
-     LCD_Mode = 1;
-   }
+  if ( LCD_State == -1 )
+    LCD_ShowAllValues();
+  else 
+    LCD_ShowOneValue();
 
-   LCD_ShowAllValues();
+}
+/*
+ * Read Button State
+ */
+
+boolean Read_LCD_Button()
+{
+  LCD_BNEW_VAL = digitalRead(LCD_Button);
+  
+  if (LCD_BNEW_VAL != LCD_BOLD_VAL )
+  {
+    LCD_BOLD_VAL = LCD_BNEW_VAL;
+    return (LCD_BNEW_VAL == HIGH);
   }
   else {
-        LCD_ShowOneValue();
-       }
+         return false;
+  }
 }
-
+/*
+ *
+ */
+void LCD_Scroll_Text(int Row, String LCD_Welcome)
+{
+  int idx0;
+  int idx1 = LCD_Welcome.length();
+  
+  for ( idx0 = 0; idx0 < idx1; idx0++)
+  {
+     lcd.setCursor(0,Row);
+     lcd.print(LCD_Welcome.substring(idx0,idx0+19));
+     delay(300);
+     if ( Read_LCD_Button() )
+       break;
+  }
+}
+/*
+ * Turn ON LCD Backligth
+ */
+void LCD_ON()
+{
+  lcd.display();
+  lcd.backlight();
+  
+  LCD_TIME_ON = millis();
+}
+/*
+ * Check if turn-off LCD
+ */
+boolean  CHECK_LCD_DIM()
+{
+  
+//  lcd.setCursor(0,3);
+//  lcd.print(( millis() - LCD_TIME_ON));
+//  lcd.print(" ");
+//  lcd.print(LCD_DIM);
+  
+  if ( (long)( millis() - LCD_TIME_ON ) > LCD_DIM )
+  {
+    lcd.noDisplay();
+    lcd.noBacklight();
+    return true;
+  } else {
+           return false;
+  }
+}
 #endif
