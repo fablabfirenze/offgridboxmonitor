@@ -161,6 +161,10 @@ float getWaterLevel(){
   float R = 57.75; //radius tank CH 1500 [cm]
   float liters = L*(pow(R,2)*acos((R-h)/R)+ (h-R)*sqrt( 2*h*R - pow(h,2)))/1000; //volume = area under the arc * length --> 1dm^3 = 1000cm^3 
 
+  if(h<=0){
+    liters = 0; 
+  }
+
   if(h>=2*R){ //check max liters = 1500 @2*R as in the formula
     liters = 1500; 
   } 
