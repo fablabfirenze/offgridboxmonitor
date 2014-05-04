@@ -1,4 +1,4 @@
-#define DEBUG
+//#define DEBUG
 #define BATTERY_PIN A2
 #define COUNTER_PIN 5 //This rappresents the PIN 18 on the Arduino Mega interpretate as an interrupt
 
@@ -22,7 +22,7 @@ void setup_battery()
 
 void setup_counter()
 {
-  pinMode(COUNTER_PIN,INPUT);
+  attachInterrupt(COUNTER_PIN,counter,RISING);
 }
 
 //READ BATTERY TEMPERATURE (24 V BATTERY)
@@ -85,7 +85,7 @@ float getBatteryPercentage()
 
 float getKWh()
 {
-   #ifndef DEBUG
+   #ifdef DEBUG
      Serial.print("KWh:");
      Serial.println(counter_variable/1000);
    #endif
