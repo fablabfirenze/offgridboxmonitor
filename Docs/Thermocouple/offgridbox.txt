@@ -1,0 +1,56 @@
+Assembly Instructions.
+
+Panel thermocouple (397-1567).
+The thermocouple is plugged with a 3m approx red cable red shield to a max31855 based board.
+Warning: 
+	Blue internal conductor is joined to positive pole (+)    
+	White internal conductor is joined to negative pole (-)
+
+
+Environment thermocouple (TME 409-4908)
+The thermocouple is plugged with twisted pair green/white to a max31855 based board.
+Warning: 
+	White conductor is joined to positive pole (+)    
+	Green conductor is joined to negative pole (-)
+
+
+The two max31855 based board must be connected to Arduino digital input and to power (Vcc 5V) and ground.
+Pins used on each board are: 
+
+Vin
+GND
+DO
+CS
+CLK
+Pin 3Vo is unused 
+
+
+Input used in Arduino sketch for board controlling Panel thermocouple:
+DO = 23;
+CS = 25;
+CLK = 27;
+
+Input used in Arduino sketch for board controlling Environment thermocouple:
+DO = 22;
+CS = 24;
+CLK = 26;
+
+If you need to change Pin, you must change in Arduino sketch the following lines:
+
+//THERMOCOUPLE AMBIENT CONST
+const int THERMO_ENV_DO = 22;
+const int THERMO_ENV_CS = 24;
+const int THERMO_ENV_CLK =26;
+
+//THERMOCOUPLE AMBIENT CONST
+const int THERMO_ENV_DO = 22;
+const int THERMO_ENV_CS = 24;
+const int THERMO_ENV_CLK =26;
+
+
+
+//THERMOCOUPLE PANEL CONST
+const int THERMO_PANEL_DO = 23;//10
+const int THERMO_PANEL_CS = 25;//8
+const int THERMO_PANEL_CLK = 27;//9
+
