@@ -1,0 +1,26 @@
+<div class="row current_status">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Off grid box One</h3>
+        </div>
+        <div class="panel-body">
+            <div class="col-lg-3">
+                <h3>Panel Temp</h3>
+                <p><span class="fa fa-tachometer"></span>{{datastreams_one[3].current_value + datastreams_one[3].unit.symbol}}</p>
+            </div>
+            <div class="col-lg-3">
+                <h3>Ambient Temp</h3>
+                <p><span class="fa fa-tachometer"></span>{{datastreams_one[0].current_value + datastreams_one[0].unit.symbol}}</p>
+            </div>
+            <div class="col-lg-3">
+                <h3>Water Level</h3>
+                <p><span class="fa fa-tint"></span>{{datastreams_one[4].current_value + datastreams_one[4].unit.symbol}}</p>
+            </div>
+            <div class="col-lg-3">
+                <h3>Battery status</h3>
+                <p><span class="fa fa-bolt"></span>{{datastreams_one[2].current_value + datastreams_one[2].unit.symbol + ' / ' +
+                                        datastreams_one[1].current_value + datastreams_one[1].unit.symbol}}</p>
+            </div>
+        </div>
+    </div>
+</div>
