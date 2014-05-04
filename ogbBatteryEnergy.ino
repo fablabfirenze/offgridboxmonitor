@@ -15,24 +15,6 @@ const int perc_step[] = {100,95,90,85,80,75,70,65,60,55,50,40,30,20,10};        
 
 unsigned int counter_variable = 0;
 
-void setup()
-{
-  Serial.begin(9600);
-  setup_battery();
-  setup_counter();
-}
-
-void loop()
-{
-  getBatteryVoltage();
-  getBatteryPercentage();
-  
-  getKWh();
-  
-  delay(1000);
-  
-}
-
 void setup_battery()
 {
   pinMode(BATTERY_PIN,INPUT);
