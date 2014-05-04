@@ -18,7 +18,7 @@ Adafruit_MAX31855 thermocouplePanel(THERMO_PANEL_CLK, THERMO_PANEL_CS, THERMO_PA
 
 boolean isEnvironmentTempValid = false;  //true:indicate valid temp number; fales: temp read failed NAN
 boolean isPanelTempValid = false;  //true:indicate valid temp number; fales: temp read failed NAN
-boolean debug = false;              //true:fro printing data in serial line
+boolean debug = true;              //true:fro printing data in serial line
 // Section for Temparature SENSOR - end
 
 // SECTION FOR LCD DECLARATION - start
@@ -72,6 +72,8 @@ void setup() {
   if(debug == true){
     Serial.begin(9600);
   }
+  setup_battery();
+  setup_counter();
 
   // to prevent millis reset, bind all variables to the array
   int idx0 = 0;
@@ -93,6 +95,7 @@ void loop() {
     ambientTemp       = getAmbientTemp();
     batteryVoltage    = getBatteryVoltage();
     batteryPercentage = getBatteryPercentage();
+    powerUsed         = getKWh();
     waterLevel        = getWaterLevel();
     
     if (logToSd()) {

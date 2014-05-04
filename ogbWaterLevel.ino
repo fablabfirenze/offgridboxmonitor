@@ -26,5 +26,15 @@ float getWaterLevel(){
   if(h>=2*R){ //check max liters = 1500 @2*R as in the formula
     liters = 1500;
   }
+  
+  if(debug==true){
+     Serial.print("h = ");
+     Serial.println(h);
+     Serial.print("VSensor = ");
+     Serial.println(Vactual);
+     Serial.print("liters = ");
+     Serial.println(liters);
+  }
+  
   return liters;
 }
