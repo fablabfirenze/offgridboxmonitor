@@ -30,6 +30,15 @@ const int LCD_NCAR = 20;
 const int LCD_NROW = 4;
 // LCD Button Pin
 const int LCD_Button = 4;
+
+int  LCD_CurrPage;              // Current page displayed for LCD_State = -1
+unsigned long LCD_Page_Time = 15 * 1000;  // switch page Timeout
+unsigned long LCD_CurrPageTime;          // Up Time of page
+
+// Timeout for LCD off (millisecond)
+unsigned long LCD_DIM  = 120000;
+unsigned long LCD_TIME_ON;
+
 // SECTION FOR LCD DECLARATION - end
 
 //SECTION FOR WATERLEVEL DECLARETION - start
@@ -56,10 +65,19 @@ float powerUsed          = 0.0;
 boolean readSensorValue = true;
 boolean sendValueToServer = true;
 
+
+unsigned long *My_Timer[10];
+
 void setup() {
   if(debug == true){
     Serial.begin(9600);
   }
+
+  // to prevent millis reset, bind all variables to the array
+  int idx0 = 0;
+  My_Timer[idx0++] = &LCD_CurrPageTime;
+  My_Timer[idx0++] = &LCD_TIME_ON;
+  My_Timer[idx0]   = 0x00;                // last entry MUST be null!!!
 
   setupLCD();
   setupRTC();
@@ -68,6 +86,7 @@ void setup() {
 }
 
 void loop() {
+  checkTimerOverflow();
   //READ SENSOR VALUES
   if(readSensorValue){
     panelTemp         = getPanelTemp();
@@ -91,6 +110,24 @@ void loop() {
 
   LCD_Refresh(Read_LCD_Button());
 
+
   delay(120000);
 }
 
+
+unsigned long lastTime = 4294964296;
+void checkTimerOverflow(){
+  unsigned long mil = millis() + 4294964296;
+
+  if(mil < lastTime){
+    // Serial.println("\n\n\nRESET\n\n");
+    // Serial.println(mil);
+
+    for(int idx=0; My_Timer[idx]; idx++ ){
+      *My_Timer[idx] -=  lastTime - mil;
+    }
+
+  }
+  lastTime = mil;
+
+}

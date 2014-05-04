@@ -36,10 +36,6 @@ struct LCD_Values {
 int LCD_State;                  // Current state
 #define LCD_State_Start  -1;    // -1 = All Values at a time
 
-int  LCD_CurrPage;              // Current page displayed for LCD_State = -1
-long LCD_Page_Time = 15 * 1000;  // switch page Timeout
-long LCD_CurrPageTime;          // Up Time of page
-
 LCD_Values  LCD_A_Val[] = { 1, &panelTemp,         0.0,    130.0, 0, "Panel Temp.",     "\"C",    " PT",   0,  0, 1,
                             2, &ambientTemp,       0.0,     80.0, 0, "Ambient Temp",    "\"C",    " AT",   0,  7, 1,
                             3, &batteryVoltage,    0.0,     26.0, 1, "Battery Voltage", "V",      " BV",   0, 12, 1,
@@ -51,10 +47,6 @@ LCD_Values  LCD_A_Val[] = { 1, &panelTemp,         0.0,    130.0, 0, "Panel Temp
 
 // Welcome Message
 String LCD_Welcome = "Feat. by \"La Fabbrica del Sole\", \"FabLab Firenze\", \"OXFAM Italia\", \"Impact HUB Firenze\" ";
-
-// Timeout for LCD off (millisecond)
-long LCD_DIM  = 120000;
-long LCD_TIME_ON;
 
 // BOUNCE THE BUTTON
 int LCD_BOLD_VAL;

@@ -19,7 +19,7 @@ void setup_battery()
 {
   pinMode(BATTERY_PIN,INPUT);
 }
-                                 
+
 void setup_counter()
 {
   pinMode(COUNTER_PIN,INPUT);
@@ -29,66 +29,66 @@ void setup_counter()
 float getBatteryVoltage(){
   float value = analogRead(BATTERY_PIN);
   float vout = ((value * VCC) / 1023.0f);
-  
+
   float second_vout;
-  
+
   #ifdef DEBUG
     Serial.print("ADC read: ");
     Serial.println(value);
     Serial.print(vout);
     Serial.println("V");
   #endif
-  
-  
+
+
   //Now we have the voltage between 0-3.5
   //We must convert it to the range 0-24 and return it
-  
+
   second_vout = (vout * BATTERY_CONST);
   #ifdef DEBUG
     Serial.print(second_vout);
     Serial.print("V");
     Serial.print("\n");
   #endif
-  
+
   return vout;
 }
 //READ BATTERY PERCENTAGE
-int getBatteryPercentage()
-{  
+float getBatteryPercentage()
+{
   float value = analogRead(BATTERY_PIN);
   float vout = ((value * VCC) / 1023.0f);
-  
-  float second_vout;  
-  
+  float val;
+  float second_vout;
+
   //Now we have the voltage between 0-3.5
   //We must convert it to the range 0-24 and return it
-  
+
   second_vout = (vout * BATTERY_CONST);
-  
+  val = 0;
   for(int i=0;i<NUM_OF_STEP;i++)
   {
     if(second_vout > voltage[i])
     {
       //We can add here the map function to approximate a percentage value
-     int val = map(second_vout, voltage[i], voltage[i-1], perc_step[i], perc_step[i-1]);
+     val = map(second_vout, voltage[i], voltage[i-1], perc_step[i], perc_step[i-1]);
      #ifdef DEBUG
        Serial.print(val);
        Serial.println("%");
      #endif
-     
-      break;  
+
+      break;
     }
   }
-  
-  return vout;
+
+  return val;
 }
 
 float getKWh()
-{   
+{
    #ifndef DEBUG
      Serial.print("KWh:");
      Serial.println(counter_variable/1000);
-   #endif     
+   #endif
 }
 
 void counter()
