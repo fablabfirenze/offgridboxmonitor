@@ -41,6 +41,10 @@ float getBatteryVoltage(){
   {
   		value = analogRead(BATTERY_PIN);
   		vout += (25.84 * value)/727.0;
+  		
+  		
+  		//Little delay to prevent getting uquals readings
+  		delay(10);
   }
 
   // #ifdef DEBUG
