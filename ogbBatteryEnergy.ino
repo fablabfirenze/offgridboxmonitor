@@ -29,12 +29,19 @@ void setup_counter()
 
 //READ BATTERY TEMPERATURE (24 V BATTERY)
 float getBatteryVoltage(){
-  float value = analogRead(BATTERY_PIN);
+  
+  float values = 0;
   // float vout = ((value * VCC) / 1023.0f);
-  float vout = value;
-  vout = (25.84 * vout)/727.0;
+  float vout = 0;
+  //vout = (25.84 * vout)/727.0;
 
   float second_vout;
+  
+  for(int i=0;i<NUM_OF_SAMPLE;i++)
+  {
+  		value = analogRead(BATTERY_PIN);
+  		vout += (25.84 * value)/727.0;
+  }
 
   // #ifdef DEBUG
   //   Serial.print("ADC read: ");
@@ -54,27 +61,19 @@ float getBatteryVoltage(){
   //   Serial.print("\n");
   // #endif
 
-  return vout;
+  return (vout/NUM_OF_SAMPLE);
 }
 //READ BATTERY PERCENTAGE
-float getBatteryPercentage()
+float getBatteryPercentage(float lastRead)
 {
-  float value = analogRead(BATTERY_PIN);
-  float vout = ((value * VCC) / 1023.0f);
-  float val;
-  float second_vout;
+  float val = 0;
 
-  //Now we have the voltage between 0-3.5
-  //We must convert it to the range 0-24 and return it
-
-  second_vout = (vout * BATTERY_CONST);
-  val = 0;
   for(int i=0;i<NUM_OF_STEP;i++)
   {
-    if(second_vout > voltage[i])
+    if(lastRead > voltage[i])
     {
       //We can add here the map function to approximate a percentage value
-     val = map(second_vout, voltage[i], voltage[i-1], perc_step[i], perc_step[i-1]);
+     val = map(lastRead, voltage[i], voltage[i-1], perc_step[i], perc_step[i-1]);
      #ifdef DEBUG
        Serial.print(val);
        Serial.println("%");

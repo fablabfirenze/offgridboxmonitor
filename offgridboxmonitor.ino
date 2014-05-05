@@ -104,7 +104,7 @@ void loop() {
     panelTemp         = getPanelTemp();
     ambientTemp       = getAmbientTemp();
     batteryVoltage    = getBatteryVoltage();
-    batteryPercentage = getBatteryPercentage();
+    batteryPercentage = getBatteryPercentage(batteryVoltage);
     powerUsed         = getKWh();
     waterLevel        = getWaterLevel();
 
