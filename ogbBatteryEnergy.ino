@@ -2,7 +2,9 @@
 #define BATTERY_PIN A2
 #define COUNTER_PIN 5 //This rappresents the PIN 18 on the Arduino Mega interpretate as an interrupt
 
-//----------------------------------ALL THIS PARAMETER HAVE TO BE CHANGED BY THE VALUES REPORTED ON THE DATA-SHEET OF THE BATTERIES--------------------------------
+#define NUM_OF_SAMPLE 5 //To increase the precision of analog read
+
+//ALL THIS PARAMETER HAVE TO BE CHANGED BY THE VALUES REPORTED ON THE DATA-SHEET OF THE BATTERIES
 #define BATTERY_FULLY_CHARGED 27.0f                                   //The value of the series of batteries after complete chargin, THIS CONSTANT HAVE TO BE RE-MEASURED WHEN THE BATTERIES ARE FULLY CHARGED
 #define BATTERY_FULLY_CHARGED_PROP 3.5978f                           //The value of the battery seen by the voltage divider, THIS CONSTANT HAVE TO BE RE-MEASURED WHEN THE BATTERIES ARE FULLY CHARGED
 #define BATTERY_CONST BATTERY_FULLY_CHARGED/BATTERY_FULLY_CHARGED_PROP
@@ -11,7 +13,7 @@
 #define NUM_OF_STEP 15 //It must be the number of the element in both the below arrays
 const float voltage[] = {26.40,26.26,26.16,26.04,25.92,25.80,25.72,25.64,25.56,25.48,25.40,25.24,25.08,24.96,24.88}; //THIS VALUE HAVE TO BE CHANGED WITH THE CORRECT VALUES FROM THE BATTERY'S DATASHEET
 const int perc_step[] = {100,95,90,85,80,75,70,65,60,55,50,40,30,20,10};                                             //THIS VALUE HAVE TO BE CHANGED WITH THE CORRECT VALUES FROM THE BATTERY'S DATASHEET
-//-------------------------------------------------------------------------------END-----------------------------------------------------------------------------
+//END
 
 unsigned int counter_variable = 0;
 
